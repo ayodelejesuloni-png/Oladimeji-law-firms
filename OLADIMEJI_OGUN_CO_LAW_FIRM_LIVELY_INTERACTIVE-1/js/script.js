@@ -138,16 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },7000);
   }
 
-  // Contact/booking forms: keep static sites friendly without pretending to send data.
-  document.querySelectorAll("form[data-demo-form]").forEach(form=>{
-    form.addEventListener("submit",e=>{
-      e.preventDefault();
-      if(!form.checkValidity()){ form.reportValidity(); return; }
-      showLegalToast("Thank you. Your details have been captured for this demo.");
-      form.reset();
-    });
-  });
-});
+
 
 /* ===== Next-Level Polish JS ===== */
 document.addEventListener("DOMContentLoaded",()=>{
@@ -164,24 +155,34 @@ document.addEventListener("DOMContentLoaded",()=>{
   updateProgress();
 });
 
-/* ===== Real enquiry handoff ===== */
+
+/* ===== Working enquiry forms ===== */
 function sendToWhatsApp(form, title){
   const data=new FormData(form);
-  const get=k=>(data.get(k)||"").toString().trim();
+  const labels=[["Name","name"],["Email","email"],["Phone","phone"],["Subject","subject"],["Preferred date","date"],["Practice area","area"],["Message","message"]];
   const lines=[title];
-  [["Name","name"],["Email","email"],["Phone","phone"],["Subject","subject"],["Preferred date","date"],["Practice area","area"],["Message","message"]]
-    .forEach(([label,key])=>{const value=get(key);if(value) lines.push(label+": "+value);});
+  labels.forEach(([label,key])=>{
+    const value=(data.get(key)||"").toString().trim();
+    if(value) lines.push(label+": "+value);
+  });
   const url="https://wa.me/2348024273323?text="+encodeURIComponent(lines.join("\n"));
-  window.open(url,"_blank","noopener,noreferrer");
+  const win=window.open(url,"_blank");
+  const msg=form.querySelector(".form-message");
+  if(win){
+    if(msg) msg.textContent="Your enquiry is ready in WhatsApp. Review it and tap Send.";
+  }else{
+    if(msg) msg.textContent="Your browser blocked the WhatsApp window. Please allow pop-ups and try again.";
+  }
 }
 document.addEventListener("DOMContentLoaded",()=>{
   document.querySelectorAll("#contactForm,#bookingForm").forEach(form=>{
-    form.addEventListener("submit",e=>{
+    form.addEventListener("submit",(e)=>{
       e.preventDefault();
-      if(!form.checkValidity()){form.reportValidity();return;}
+      if(!form.checkValidity()){
+        form.reportValidity();
+        return;
+      }
       sendToWhatsApp(form,form.id==="bookingForm"?"New consultation request":"New legal enquiry");
-      const msg=form.querySelector(".form-message");
-      if(msg) msg.textContent="WhatsApp opened with your enquiry details. Please review and send the message.";
     });
   });
 });
