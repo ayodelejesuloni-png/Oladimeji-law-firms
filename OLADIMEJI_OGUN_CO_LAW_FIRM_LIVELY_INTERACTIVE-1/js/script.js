@@ -148,3 +148,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+/* ===== Next-Level Polish JS ===== */
+document.addEventListener("DOMContentLoaded",()=>{
+  const bar=document.createElement("div");
+  bar.className="scroll-progress";
+  bar.setAttribute("aria-hidden","true");
+  document.body.appendChild(bar);
+  const updateProgress=()=>{
+    const max=document.documentElement.scrollHeight-window.innerHeight;
+    bar.style.width=(max>0 ? (window.scrollY/max)*100 : 0)+"%";
+  };
+  window.addEventListener("scroll",updateProgress,{passive:true});
+  window.addEventListener("resize",updateProgress);
+  updateProgress();
+});
