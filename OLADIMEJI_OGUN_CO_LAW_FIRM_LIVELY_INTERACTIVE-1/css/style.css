@@ -104,3 +104,43 @@ body::before{
  .legal-tip{right:12px;left:12px;max-width:none}
  .practice-filter{justify-content:flex-start;overflow:auto;flex-wrap:nowrap;padding-bottom:5px}
 }
+
+/* ===== Next-Level Polish ===== */
+.site-header.scrolled{
+  box-shadow:0 12px 35px rgba(0,0,0,.22);
+  background:rgba(3,18,38,.985);
+}
+.site-header.scrolled .brand-mark{transform:scale(.94);transition:.25s}
+.site-header .brand-mark{transition:.25s}
+.scroll-progress{
+  position:fixed;left:0;top:0;height:3px;width:0;z-index:120;
+  background:linear-gradient(90deg,var(--gold),var(--gold-light,#f4d77a));
+  box-shadow:0 0 12px rgba(212,175,55,.45);
+}
+.hero::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(135deg,rgba(255,255,255,.045) 1px,transparent 1px);
+  background-size:42px 42px;opacity:.22;
+}
+.hero-content{animation:heroRise .9s ease both}
+@keyframes heroRise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.btn,.nav-cta,.filter-btn,.floating-cta a,.back-top{
+  -webkit-tap-highlight-color:transparent;
+}
+.btn:focus-visible,.nav-cta:focus-visible,.filter-btn:focus-visible,
+.main-nav a:focus-visible,.menu-toggle:focus-visible,
+.floating-cta a:focus-visible,.back-top:focus-visible{
+  outline:3px solid rgba(244,189,69,.55);outline-offset:3px;
+}
+.practice-card,.service-detail,.team-card,.form-card,.info-panel,.case-card{
+  will-change:transform;
+}
+::selection{background:rgba(212,175,55,.25);color:var(--navy)}
+@media(max-width:800px){
+  .hero-content{animation:none}
+  .scroll-progress{height:2px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
