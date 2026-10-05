@@ -163,3 +163,25 @@ document.addEventListener("DOMContentLoaded",()=>{
   window.addEventListener("resize",updateProgress);
   updateProgress();
 });
+
+/* ===== Real enquiry handoff ===== */
+function sendToWhatsApp(form, title){
+  const data=new FormData(form);
+  const get=k=>(data.get(k)||"").toString().trim();
+  const lines=[title];
+  [["Name","name"],["Email","email"],["Phone","phone"],["Subject","subject"],["Preferred date","date"],["Practice area","area"],["Message","message"]]
+    .forEach(([label,key])=>{const value=get(key);if(value) lines.push(label+": "+value);});
+  const url="https://wa.me/2348024273323?text="+encodeURIComponent(lines.join("\n"));
+  window.open(url,"_blank","noopener,noreferrer");
+}
+document.addEventListener("DOMContentLoaded",()=>{
+  document.querySelectorAll("#contactForm,#bookingForm").forEach(form=>{
+    form.addEventListener("submit",e=>{
+      e.preventDefault();
+      if(!form.checkValidity()){form.reportValidity();return;}
+      sendToWhatsApp(form,form.id==="bookingForm"?"New consultation request":"New legal enquiry");
+      const msg=form.querySelector(".form-message");
+      if(msg) msg.textContent="WhatsApp opened with your enquiry details. Please review and send the message.";
+    });
+  });
+});
