@@ -4,11 +4,7 @@ document.querySelectorAll(".main-nav a").forEach(a=>a.addEventListener("click",(
 const header=document.querySelector(".site-header");
 window.addEventListener("scroll",()=>{if(header) header.classList.toggle("scrolled",scrollY>20);});
 document.querySelectorAll(".faq button").forEach(btn=>btn.addEventListener("click",()=>{btn.classList.toggle("open");const panel=btn.nextElementSibling;panel.style.display=panel.style.display==="block"?"none":"block";}));
-function formHandler(id){
- const form=document.getElementById(id); if(!form)return;
- form.addEventListener("submit",e=>{e.preventDefault();const msg=form.querySelector(".form-message");if(!form.checkValidity()){msg.textContent="Please complete the required fields.";msg.style.color="#9a3d32";form.reportValidity();return;}msg.textContent="Thank you. Your request has been captured on this demo site. Connect a real form/email service before publishing.";msg.style.color="#4b6b51";form.reset();});
-}
-formHandler("contactForm");formHandler("bookingForm");
+/* Form submissions are handled once by the WhatsApp enquiry handler below. */
 const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add("visible")}),{threshold:.12});
 document.querySelectorAll(".practice-card,.team-card,.service-detail,.three-values,.info-panel,.why-list>div").forEach(el=>{el.classList.add("reveal");observer.observe(el);});
 
