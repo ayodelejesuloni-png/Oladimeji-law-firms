@@ -133,8 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
       tip.querySelector("button").onclick=()=>{tip.remove();sessionStorage.setItem("oladimeji_tip_seen","1")};
     },7000);
   }
-
-
+}); // Close the main DOMContentLoaded callback before registering independent handlers.
 
 /* ===== Next-Level Polish JS ===== */
 document.addEventListener("DOMContentLoaded",()=>{
